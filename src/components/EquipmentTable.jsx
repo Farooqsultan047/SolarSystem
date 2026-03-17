@@ -1,7 +1,10 @@
+import React from "react";
+
 const EquipmentTable = ({ equipment }) => {
   return (
     <div className="container mt-4">
       <h2>Equipment List</h2>
+
       <table className="table table-striped table-bordered">
         <thead className="table-dark">
           <tr>
@@ -14,19 +17,20 @@ const EquipmentTable = ({ equipment }) => {
         </thead>
 
         <tbody>
-          {equipment.map((eq) => (
-            <tr key={eq.id}>
-              <td>{eq.id}</td>
-              <td>{eq.plantId}</td>
-              <td>{eq.type}</td>
-              <td>{eq.installationDate}</td>
-              <td>{eq.status}</td>
+          {equipment && equipment.map((e) => (
+            <tr key={e.id}>
+              <td>{e.id}</td>
+              <td>{e.plantId}</td>
+              <td>{e.type}</td>
+              <td>{e.installationDate}</td>
+              <td>{e.status}</td>
             </tr>
           ))}
         </tbody>
+
       </table>
     </div>
   );
 };
 
-export default EquipmentTable; 
+export default EquipmentTable;

@@ -1,5 +1,5 @@
 import PlantTable from "../components/PlantTable";
-import { plants } from "../data/plants";
+import { plants } from "../data/Plant";
 
 const Plants = () => {
   return (

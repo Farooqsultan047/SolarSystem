@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Plants from "./pages/Plants";
 import Equipment from "./pages/Equipment";
-import EnergyTable from "./components/EnergyTable";
+import EnergyPage from "./pages/EnergyPage";
 const App = ()=> {
   return (
 
@@ -18,7 +18,7 @@ const App = ()=> {
  <Route path="/" element={<Home />} />
  <Route path="/plants" element={<Plants />} />
  <Route path="equipment"  element= {<Equipment />} />
-  <Route path="/energy" element={<EnergyTable />} />
+<Route path="/energyTable" element={<EnergyPage />} />
 </Routes>
    </div>
 </Router>
