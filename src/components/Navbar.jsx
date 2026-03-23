@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Links } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -10,6 +10,7 @@ const Navbar = () => {
         <Link className="nav-link text-light" to="/plants">Plants</Link>
         <Link className="nav-link text-light" to="/equipment">Equipment</Link>
         <Link className="nav-link text-light" to="/energyTable">EnergyTable</Link>
+       <Link className="nav-link text-light" to="/admin">Dashboard</Link>
 <button 
   className="btn btn-outline-danger btn-sm ms-4 px-4"
   onClick={() => {

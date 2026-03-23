@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+
 import { useState } from "react";
 
 const Login = () => {
@@ -11,7 +12,8 @@ const Login = () => {
   const handleLogin = () => {
     if (username === "admin" && password === "123") {
       localStorage.setItem("auth", "true");
-      navigate("/");
+      navigate("/admin");
+      window.location.reload();
     } else {
       alert("Wrong Credentials");
     }
