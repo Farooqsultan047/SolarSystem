@@ -1,31 +1,24 @@
 import { useState } from "react";
 
 const Admin = () => {
+  const [search, setSearch] = useState("");
 
-  // ✅ Search state (component ke andar)
-  const [search, setSearch] = useState(""); // 🔥 SEARCH STATE
-
-  // Initial plants data
   const [plants, setPlants] = useState([
     { id: 1, name: "Solar Plant A", location: "Mianwali", capacity: 50 },
     { id: 2, name: "Wind Plant B", location: "Faisalabad", capacity: 30 },
   ]);
 
-  // Form state
   const [newPlant, setNewPlant] = useState({
     name: "",
-    location: "",
-    capacity: "",
+    location: " ",
+    capacity: " ",
+  
   });
 
   const [editId, setEditId] = useState(null);
 
-  // ADD
   const addPlant = () => {
-    if (!newPlant.name || !newPlant.location || !newPlant.capacity) {
-      alert("Please fill all fields");
-      return;
-    }
+    if (!newPlant.name || !newPlant.location || !newPlant.capacity) return;
 
     const newData = {
       id: plants.length + 1,
@@ -33,98 +26,94 @@ const Admin = () => {
     };
 
     setPlants([...plants, newData]);
-
     setNewPlant({ name: "", location: "", capacity: "" });
   };
 
-  // UPDATE
-  const updatePlant = (id) => {
-    setEditId(id);
-  };
-
-  // SAVE
   const savePlant = (id, field, value) => {
-    const updated = plants.map((p) =>
-      p.id === id ? { ...p, [field]: value } : p
+    setPlants((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, [field]: value } : p))
     );
-    setPlants(updated);
   };
 
-  // DELETE
   const deletePlant = (id) => {
-    if (window.confirm("Are you sure to delete?")) {
-      setPlants(plants.filter((p) => p.id !== id));
-    }
+    setPlants(plants.filter((p) => p.id !== id));
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container-fluid px-2 px-md-5 py-3">
 
-      <h1 className="mb-4 text-center">Admin Dashboard</h1>
+      <h2 className="text-center mb-4">Admin Dashboard</h2>
 
-      {/* 🔥 SEARCH INPUT (table ke upar best place) */}
-      <input
-        type="text"
-        placeholder="Search Plant..."
-        className="form-control mb-3"
-        onChange={(e) => setSearch(e.target.value)}
-      />
-
-      {/* Add Plant Form */}
-      <div className="card p-3 mb-4 shadow-sm">
-        <h4>Add New Plant</h4>
-
-        <input
-          type="text"
-          placeholder="Plant Name"
-          className="form-control mb-2"
-          value={newPlant.name}
-          onChange={(e) =>
-            setNewPlant({ ...newPlant, name: e.target.value })
-          }
-        />
-
-        <input
-          type="text"
-          placeholder="Location"
-          className="form-control mb-2"
-          value={newPlant.location}
-          onChange={(e) =>
-            setNewPlant({ ...newPlant, location: e.target.value })
-          }
-        />
-
-        <input
-          type="number"
-          placeholder="Capacity"
-          className="form-control mb-2"
-          value={newPlant.capacity}
-          onChange={(e) =>
-            setNewPlant({ ...newPlant, capacity: e.target.value })
-          }
-        />
-
-        <button className="btn btn-success" onClick={addPlant}>
-          Add Plant
-        </button>
+      {/* SEARCH */}
+      <div className="row mb-3">
+        <div className="col-12 col-md-6 mx-auto">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search Plant..."
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </div>
 
-      {/* Table */}
-      <table className="table table-bordered table-striped shadow-sm">
-        <thead className="table-dark text-center">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Capacity</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+      {/* FORM */}
+      <div className="row g-2 mb-4">
+        <div className="col-12 col-md-4">
+          <input
+            className="form-control"
+            placeholder="Plant Name"
+            value={newPlant.name}
+            onChange={(e) =>
+              setNewPlant({ ...newPlant, name: e.target.value })
+            }
+          />
+        </div>
 
-        <tbody className="text-center">
-          {
-            // 🔥 FILTER APPLY HERE
-            plants
+        <div className="col-12 col-md-4">
+          <input
+            className="form-control"
+            placeholder="Location"
+            value={newPlant.location}
+            onChange={(e) =>
+              setNewPlant({ ...newPlant, location: e.target.value })
+            }
+          />
+        </div>
+
+        <div className="col-12 col-md-2">
+          <input
+            className="form-control"
+            placeholder="Capacity"
+            value={newPlant.capacity}
+            onChange={(e) =>
+              setNewPlant({ ...newPlant, capacity: e.target.value })
+            }
+          />
+        </div>
+
+        <div className="col-12 col-md-2">
+          <button className="btn btn-success w-100" onClick={addPlant}>
+            Add
+          </button>
+        </div>
+      </div>
+
+      {/* TABLE */}
+      <div className="table-responsive">
+        <table className="table table-bordered table-hover text-center align-middle">
+
+          <thead className="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Location</th>
+              <th>Capacity</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {plants
               .filter((p) =>
                 p.name.toLowerCase().includes(search.toLowerCase())
               )
@@ -135,6 +124,7 @@ const Admin = () => {
                   <td>
                     {editId === p.id ? (
                       <input
+                        className="form-control form-control-sm"
                         value={p.name}
                         onChange={(e) =>
                           savePlant(p.id, "name", e.target.value)
@@ -148,6 +138,7 @@ const Admin = () => {
                   <td>
                     {editId === p.id ? (
                       <input
+                        className="form-control form-control-sm"
                         value={p.location}
                         onChange={(e) =>
                           savePlant(p.id, "location", e.target.value)
@@ -161,6 +152,7 @@ const Admin = () => {
                   <td>
                     {editId === p.id ? (
                       <input
+                        className="form-control form-control-sm"
                         value={p.capacity}
                         onChange={(e) =>
                           savePlant(p.id, "capacity", e.target.value)
@@ -174,15 +166,15 @@ const Admin = () => {
                   <td>
                     {editId === p.id ? (
                       <button
-                        className="btn btn-primary btn-sm me-2"
+                        className="btn btn-primary btn-sm"
                         onClick={() => setEditId(null)}
                       >
                         Save
                       </button>
                     ) : (
                       <button
-                        className="btn btn-warning btn-sm me-2"
-                        onClick={() => updatePlant(p.id)}
+                        className="btn btn-warning btn-sm me-1"
+                        onClick={() => setEditId(p.id)}
                       >
                         Edit
                       </button>
@@ -196,11 +188,11 @@ const Admin = () => {
                     </button>
                   </td>
                 </tr>
-              ))
-          }
-        </tbody>
-      </table>
+              ))}
+          </tbody>
 
+        </table>
+      </div>
     </div>
   );
 };
